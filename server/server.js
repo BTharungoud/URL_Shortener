@@ -1,9 +1,22 @@
-const express = require('express');
+import route from './Routes/Route.js';
+import routemapping from './Routes/routemapping.js';
+import express, { json } from 'express';
+// import connectDB from './config/database.js';
+import 'dotenv/config.js'
+import mongoose from 'mongoose';
+import { connectDB } from './config/database.js';
+// import { json as _json } from 'body-parser';
+
 // const cors = require('cors');
 
 const app = express();
 
 const port = 5000;
+app.use(json());
+// app.use(_json());
+app.use('/map',route);
+app.use('/mapping',routemapping);
+
 
 app.get('/',(req,res)=>{
     res.send('sucessfully created server');
@@ -24,6 +37,7 @@ app.get('/i',(req,res)=>{
     
 })
 
+
 app.get('/i/google',(req,res)=>{
     res.send('https://www.google.com');
 })
@@ -40,7 +54,16 @@ app.get('/r/google',(req,res)=>{
 app.get('/r/github',(req,res)=>{
     res.send('https://www.github.com');
 })
+const startServer=async()=>{
+    try {
+       await connectDB(process.env.MONGO)
+        console.log(`connected to DB.`)
+        app.listen(port, () => {
+            console.log(`server listening on ${port}`);
+        })
+    } catch (error) {
+        console.log(`error->${error}`)
+    }
+}
 
-app.listen(port,()=>{
-    console.log(`Server running at http://localhost:${port}`);
-})
+startServer()
