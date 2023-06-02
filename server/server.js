@@ -5,13 +5,13 @@ import 'dotenv/config.js'
 import { connectDB } from './config/database.js';
 import URLSchema from './models/model.js';
 import ShortURL from './Routes/ShortenRoute.js';
-
-// const cors = require('cors');
+import cors from "cors";
 
 const app = express();
 
 const port = 5000;
 app.use(json());
+app.use(cors());
 app.use('/map',route);
 app.use('/mapping',routemapping);
 app.use('/shorten',ShortURL);
