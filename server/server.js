@@ -18,7 +18,7 @@ app.use('/shorten',ShortURL);
 
 
 app.get('/',(req,res)=>{
-    res.send('sucessfully created server');
+    res.redirect("https://647a2cee11e36039d579b18c--effervescent-baklava-0dbcf0.netlify.app/");
 });
 
 app.get('/i',(req,res)=>{
