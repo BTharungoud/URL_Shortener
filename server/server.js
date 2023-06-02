@@ -4,6 +4,7 @@ import express, { json } from 'express';
 import 'dotenv/config.js'
 import { connectDB } from './config/database.js';
 import URLSchema from './models/model.js';
+import ShortURL from './Routes/ShortenRoute.js';
 
 // const cors = require('cors');
 
@@ -13,6 +14,7 @@ const port = 5000;
 app.use(json());
 app.use('/map',route);
 app.use('/mapping',routemapping);
+app.use('/shorten',ShortURL);
 
 
 app.get('/',(req,res)=>{
@@ -55,10 +57,8 @@ app.get('/r/github',(req,res)=>{
 app.get('/r/:alias',async (req,res)=>{
     const {alias} = req.params
     const URL = await URLSchema.findOne({alias});
-    // console.log(alias);
-    console.log(URL.url);
     res.redirect(URL.url)
-})
+});
 
 const startServer=async()=>{
     try {
